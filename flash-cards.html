@@ -1,0 +1,401 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>Flash Cards</title>
+    <script id="js-dictionary">
+        var dictionary = {
+            terms: {
+                nominative: [
+                    "<@spring.message 'games.common.singleTerm.nominative'/>",
+                    "<@spring.message 'games.common.fewTerms.nominative'/>",
+                    "<@spring.message 'games.common.multipleTerms.nominative'/>"
+                ],
+                genitive: [
+                    "<@spring.message 'games.common.singleTerm.genitive'/>",
+                    "<@spring.message 'games.common.fewTerms.genitive'/>",
+                    "<@spring.message 'games.common.multipleTerms.genitive'/>"
+                ]
+            },
+            digits: {
+                nominative: [
+                    "<@spring.message 'games.common.singleDigit.nominative'/>",
+                    "<@spring.message 'games.common.fewDigits.nominative'/>",
+                    "<@spring.message 'games.common.multipleDigits.nominative'/>"
+                ],
+                genitive: [
+                    "<@spring.message 'games.common.singleDigit.genitive'/>",
+                    "<@spring.message 'games.common.fewDigits.genitive'/>",
+                    "<@spring.message 'games.common.multipleDigits.genitive'/>"
+                ]
+            },
+            rightAnswers: {
+                nominative: [
+                    "<@spring.message 'games.common.singleRightAnswer.nominative'/>",
+                    "<@spring.message 'games.common.fewRightAnswers.nominative'/>",
+                    "<@spring.message 'games.common.multipleRightAnswers.nominative'/>"
+                ],
+                genitive: [
+                    "<@spring.message 'games.common.singleRightAnswer.genitive'/>",
+                    "<@spring.message 'games.common.fewRightAnswers.genitive'/>",
+                    "<@spring.message 'games.common.multipleRightAnswers.genitive'/>"
+                ]
+            },
+            modules: {
+                simple: "<@spring.message 'games.flashCards.modules.simple'/>",
+                brothersHelp: "<@spring.message 'games.flashCards.modules.brothersHelp'/>",
+                friendsHelp: "<@spring.message 'games.flashCards.modules.friendsHelp'/>",
+                combined: "<@spring.message 'games.flashCards.modules.combined'/>",
+                arbitrary: "<@spring.message 'games.flashCards.modules.arbitrary'/>"
+            },
+            _operations: {
+                addition: "<@spring.message 'games.flashCards.operations.addition'/>",
+                subtraction: "<@spring.message 'games.flashCards.operations.subtraction'/>",
+                additionAndSubtraction: "<@spring.message 'games.flashCards.operations.additionAndSubtraction'/>"
+            },
+            "sec": "<@spring.message 'games.common.sec'/>",
+
+            "difficulty": "<@spring.message 'games.flashCards.js.difficulty'/>",
+            "difficultyMustBeANumber": "<@spring.message 'games.flashCards.js.difficultyMustBeANumber'/>",
+            "difficultyCannotBeLessThan": "<@spring.message 'games.flashCards.js.difficultyCannotBeLessThan'/>",
+            "difficultyCannotBeMoreThan": "<@spring.message 'games.flashCards.js.difficultyCannotBeMoreThan'/>",
+            "numberOfImpulses": "<@spring.message 'games.flashCards.js.numberOfImpulses'/>",
+            "numberOfImpulsesMustBeANumber": "<@spring.message 'games.flashCards.js.numberOfImpulsesMustBeANumber'/>",
+            "numberOfImpulsesCannotBeLessThan": "<@spring.message 'games.flashCards.js.numberOfImpulsesCannotBeLessThan'/>",
+            "numberOfImpulsesCannotBeMoreThan": "<@spring.message 'games.flashCards.js.numberOfImpulsesCannotBeMoreThan'/>",
+            "interval": "<@spring.message 'games.flashCards.js.interval'/>",
+            "intervalMustBeANumber": "<@spring.message 'games.flashCards.js.intervalMustBeANumber'/>",
+            "intervalCannotBeLessThan": "<@spring.message 'games.flashCards.js.intervalCannotBeLessThan'/>",
+            "intervalCannotBeMoreThan": "<@spring.message 'games.flashCards.js.intervalCannotBeMoreThan'/>",
+            "savingExerciseError": "<@spring.message 'games.flashCards.js.savingExerciseError'/>",
+            "right": "<@spring.message 'games.flashCards.js.right'/>",
+            "rightAnswersInProcess": "<@spring.message 'games.flashCards.js.rightAnswersInProcess'/>",
+            "resultingRightAnswers": "<@spring.message 'games.flashCards.js.resultingRightAnswers'/>",
+            "appeal0": "<@spring.message 'games.flashCards.js.appeal0'/>",
+            "appeal1": "<@spring.message 'games.flashCards.js.appeal1'/>",
+            "appeal2": "<@spring.message 'games.flashCards.js.appeal2'/>",
+            "appeal3": "<@spring.message 'games.flashCards.js.appeal3'/>",
+            "appeal4": "<@spring.message 'games.flashCards.js.appeal4'/>"
+        }
+    </script>
+    <style>
+        #singleGame .game-answer-area {
+            display: flex;
+            align-items: stretch;
+        }
+    </style>
+    <link href="/images/favicon.ico" rel="icon" type="image/ico"/>
+    <link rel="stylesheet" href="/css/iconmonstr-iconic-font.min.css">
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/main.css" rel="stylesheet"/>
+    <link href="/css/jquery-ui.css" rel="stylesheet"/>
+    <link href="/css/jquery-ui.structure.css" rel="stylesheet"/>
+    <link href="/css/jquery-ui.theme.css" rel="stylesheet"/>
+    <link href="/css/jquery.dataTables.min.css" rel="stylesheet"/>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.dataTables.min.js"></script>
+    <script src="/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        var lang = "<@spring.message 'lang.current'/>";
+    </script>
+
+    <script src="/js/main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script type="text/javascript" src="/js/games/game.generator.js"></script>
+    <script type="text/javascript" src="/js/utils.js"></script>
+    <script type="text/javascript" src="/js/games/sounds.js"></script>
+    <script type="text/javascript" src="/js/games/flash-cards.js"></script>
+    <script type="text/javascript" src="/js/games/flash-card-game.class.js"></script>
+    <script type="text/javascript" src="/js/cookie.js"></script>
+    <link rel="stylesheet" href="/css/games/volume-controls.css">
+    <link rel="stylesheet" href="/css/games/game.css">
+    <link rel="stylesheet" href="/css/games/flash-cards.css">
+</head>
+<body>
+<div id="game-error" class="alert alert-danger"></div>
+<div class="game-page">
+    <div class="game-head">
+        <div class="game-move-back">
+<#if model.homework??>
+    <a href="/student/homeworks">
+        <img src="/images/games/move-back-arrow.svg"><@spring.message 'common.head.menu.study'/>
+    </a>
+<#else>
+    <a href="/games/">
+        <img src="/images/games/move-back-arrow.svg"><@spring.message 'games.common.topBar.back'/>
+    </a>
+</#if>
+        </div>
+        <div class="game-logotype"><img src="/images/games/logo.svg"></div>
+        <div class="game-right-menu">
+            <div class="game-right-menu-inner">
+                <div class="game-volume-settings">
+                    <div class="game-volume-settings-controller">
+                        <input data-sounds-volume-controller data-fill-color="#ffffff" type="range"
+                               class="volume-controller">
+                    </div>
+                    <span data-sounds-mute-toggler class="mute-toggler"></span>
+                </div>
+                <div class="game-background-settings">
+                  <a tabindex="-1" class="game-background-changer"
+                     data-tooltip title="Сменить фон" data-placement="bottom">☻</a>
+                  <a tabindex="-1" class="game-background-remover"
+                     data-tooltip title="Убрать фон" data-placement="bottom">x</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="game-pause-buttons">
+            <div class="game-pause-buttons-resume" data-tooltip title="Продолжить" data-placement="bottom">
+                <img src="/images/games/resume.svg" onclick="resumeGame();">
+            </div>
+            <div class="game-pause-buttons-restart" data-tooltip title="Заново" data-placement="bottom">
+                <img src="/images/games/restart.svg" onclick="restartGame();">
+            </div>
+            <#--<div class="game-pause-buttons-menu" onclick="goToSettings();">-->
+                <#--Меню-->
+            <#--</div>-->
+        </div>
+        <div class="game-big-pause-buttons container">
+            <div class="game-pause-buttons-menu" onclick="showSettings();">
+                <@spring.message 'games.flashCards.page.menu'/>
+            </div>
+        </div>
+    </div>
+    <div class="game-container">
+        <div class="game-gray-bg"></div>
+        <div class="game-settings">
+            <div class="game-settings-head">
+                <div class="flex-block">
+                    <label for="game-mode" class="col-sm-3 control-label"><@spring.message 'games.flashCards.page.mode'/></label>
+                    <div class="col-sm-9">
+                        <div id="game-mode" class="game-settings-field picker-field">
+                            <div class="game-settings-elem" id="gameMode0" onclick="setGameMode(0);"><@spring.message 'games.flashCards.modes.normal'/></div>
+                            <div class="game-settings-elem" id="gameMode1" onclick="setGameMode(1);"><@spring.message 'games.flashCards.modes.large'/></div>
+                        </div>
+                        <div id="game-mode" class="game-settings-field-inactive picker-field">
+                            <div class="game-settings-elem" id=""><@spring.message 'games.flashCards.modes.normal'/></div>
+                            <div class="game-settings-elem" id=""><@spring.message 'games.flashCards.modes.large'/></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-block">
+                    <label for="game-mode" class="col-sm-3 control-label"><@spring.message 'games.flashCards.page.abacuses'/></label>
+                    <div class="col-sm-9">
+                        <div id="game-mode" class="game-settings-field picker-field">
+                            <div class="game-settings-elem" onclick="setColumnsCount(1)" id="gameColumns1">1</div>
+                            <div class="game-settings-elem" onclick="setColumnsCount(2)" id="gameColumns2">2</div>
+                            <div class="game-settings-elem" onclick="setColumnsCount(3)" id="gameColumns3">3</div>
+                            <div class="game-settings-elem" onclick="setColumnsCount(4)" id="gameColumns4">4</div>
+                            <div class="game-settings-elem" onclick="setColumnsCount(5)" id="gameColumns5">5</div>
+                            <div class="game-settings-elem" onclick="setColumnsCount(6)" id="gameColumns6">6</div>
+                            <div class="game-settings-elem" onclick="setColumnsCount(7)" id="gameColumns7">7</div>
+                            <div class="game-settings-elem" onclick="setColumnsCount(8)" id="gameColumns8">8</div>
+                        </div>
+                        <div id="game-mode" class="game-settings-field-inactive picker-field">
+                            <div class="game-settings-elem" id="gameColumnsInactive1">1</div>
+                            <div class="game-settings-elem" id="gameColumnsInactive2">2</div>
+                            <div class="game-settings-elem" id="gameColumnsInactive3">3</div>
+                            <div class="game-settings-elem" id="gameColumnsInactive4">4</div>
+                            <div class="game-settings-elem" id="gameColumnsInactive5">5</div>
+                            <div class="game-settings-elem" id="gameColumnsInactive6">6</div>
+                            <div class="game-settings-elem" id="gameColumnsInactive7">7</div>
+                            <div class="game-settings-elem" id="gameColumnsInactive8">8</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-settings-main">
+                <div class="flex-block">
+                    <label for="game-mode" class="col-sm-3 control-label"><@spring.message 'games.flashCards.difficulty'/></label>
+                    <div class="col-sm-9">
+                        <div id="game-mode" class="game-settings-field picker-field">
+                            <div class="game-settings-elem" id="gameSettingsLvl0" onclick="changeGameLevel(0)">¼</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl1" onclick="changeGameLevel(1)">⅑</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl2" onclick="changeGameLevel(2)">2</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl3" onclick="changeGameLevel(3)">3</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl4" onclick="changeGameLevel(4)">4</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl5" onclick="changeGameLevel(5)">5</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl6" onclick="changeGameLevel(6)">6</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl7" onclick="changeGameLevel(7)">7</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl8" onclick="changeGameLevel(8)">8</div>
+                        </div>
+                        <div id="game-mode" class="game-settings-field-inactive picker-field">
+                            <div class="game-settings-elem">¼</div>
+                            <div class="game-settings-elem">⅑</div>
+                            <div class="game-settings-elem">2</div>
+                            <div class="game-settings-elem">3</div>
+                            <div class="game-settings-elem">4</div>
+                            <div class="game-settings-elem">5</div>
+                            <div class="game-settings-elem">6</div>
+                            <div class="game-settings-elem">7</div>
+                            <div class="game-settings-elem">8</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-block">
+                    <label for="" class="col-sm-3 control-label"><@spring.message 'games.flashCards.page.interval'/></label>
+                    <div class="col-sm-9">
+                        <div class="game-settings-field row-nopad">
+                            <div class="row">
+                                <div class="game-settings-elem col-xs-2 no-select" onclick="changeGameDelay(-100);"><
+                                </div>
+                                <div class="game-settings-elem col-xs-8" id="gameDelay"
+                                     onclick="changeGameDelayWindow()">1 <@spring.message 'games.common.sec'/>
+                                </div>
+                                <div class="game-settings-elem col-xs-2 no-select" onclick="changeGameDelay(100);">>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-settings-field-inactive row-nopad">
+                            <div class="row">
+                                <div class="game-settings-elem col-xs-12" id="gameDelayInactive">1 <@spring.message 'games.common.sec'/></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-block">
+                    <label for="" class="col-sm-3 control-label"><@spring.message 'games.flashCards.page.impulses'/></label>
+                    <div class="col-sm-9">
+                        <div class="game-settings-field row-nopad">
+                            <div class="row">
+                                <div class="game-settings-elem col-xs-2 no-select" onclick="changeGameTerms(-1);"><
+                                </div>
+                                <div class="game-settings-elem col-xs-8" id="gameTerms"
+                                     onclick="changeGameTermsWindow()">1
+                                </div>
+                                <div class="game-settings-elem col-xs-2 no-select" onclick="changeGameTerms(1);">></div>
+                            </div>
+                        </div>
+                        <div class="game-settings-field-inactive row-nopad">
+                            <div class="row">
+                                <div class="game-settings-elem col-xs-12" id="gameTermsInactive">1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="game-settings-footer">
+                <div class="button" onclick="startGame();"><@spring.message 'games.flashCards.actions.play'/></div>
+            </div>
+        </div>
+        <div class="game-final-window">
+            <div class="progress">
+                <div class="progress-bar progress-bar-success progress-bar-striped active" id="gameProgressFinal"
+                     role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                     style="min-width: 2em; width: 0%;">
+                    0%
+                </div>
+            </div>
+            <div class="game-final-string"></div>
+            <div class="game-final-blocks">
+                <div class="game-final-block game-final-block-blue">
+
+                </div>
+                <div class="game-final-block-arrow"></div>
+                <div class="game-final-block">
+                    <img src="/images/game4.png" alt="">
+                    <div class="game-final-block-buttons">
+                        <div class="btn btn-success" onclick="restartGame();"><@spring.message 'games.flashCards.actions.restartGame'/></div>
+                        <div class="btn btn-primary" id="game-save" onclick="saveAnswer();"><@spring.message 'games.flashCards.actions.saveAnswer'/></div>
+
+                        <div class="game-show-full-sequence">
+                            <div class="btn btn-info game-goto-next-example" onclick="startGame();"><@spring.message 'games.flashCards.actions.nextSequence'/>
+                            </div>
+                        </div>
+                        <div class="game-hide-full-sequence">
+                            <div class="btn btn-info" onclick="hideFullSequence();"><@spring.message 'games.flashCards.actions.hideSequence'/></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="game-start-window">
+            <div class="progress">
+                <div class="progress-bar progress-bar-success progress-bar-striped active" id="gameProgress"
+                     role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                     style="min-width: 2em; width: 0%;">
+                    0%
+                </div>
+            </div>
+        </div>
+        <div id="multiGamePause">
+            <div class="game-pause-button">
+                <img src="/images/games/settings.png" onclick="settingsGame();" data-tooltip title="Настройки">
+            </div>
+        </div>
+        <div id="multiGame"></div>
+        <div id="bigAbacus">
+            <div class="game-answer-area" style=" width: 100%;">
+                <div class="question">
+                    <div class="abacus">
+                        <div class="abacus-row" id="big-abacus-numbers"></div>
+                        <div class="abacus-fields-wrapper">
+                            <div class="abacus-row abacus-fields" id="big-abacus-fields"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="game-answer-area-bg" id="singleGame">
+            <div class="game-pause-button">
+                <img src="/images/games/settings.png" onclick="settingsGame();" data-tooltip title="Настройки">
+            </div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-success progress-bar-striped active" id="gameProgress"
+                     role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                     style="min-width: 2em; width: 0%;">
+                    0%
+                </div>
+            </div>
+            <div class="game-final-string"></div>
+            <div class="game-answer-area">
+                <div class="question">
+                    <div class="abacus">
+                        <div class="abacus-row" id="abacus-numbers"></div>
+                        <div class="abacus-fields-wrapper">
+                            <div class="abacus-row abacus-fields" id="abacus-fields"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-answer-field">
+                    <input type="text" id="game-answer" autofocus>
+                    <div class="btn btn-success" onclick="checkAnswer();"><@spring.message 'games.flashCards.actions.answer'/></div>
+                </div>
+            </div>
+            <div class="game-show-full-sequence">
+                <div class="btn btn-info game-goto-next-example" onclick="showAbacusField();"><@spring.message 'games.flashCards.actions.nextSequence'/></div>
+            </div>
+            <div class="game-hide-full-sequence">
+                <div class="btn btn-info" onclick="hideFullSequence();"><@spring.message 'games.flashCards.actions.hideSequence'/></div>
+            </div>
+        </div>
+    </div>
+</div>
+<#if model.homework??>
+
+<input type="hidden" id="csrf_value" value="${_csrf.token}"/>
+    <#assign properties = model.homework.properties?eval>
+
+<script>
+    var homeWorkId = ${model.homework.id?c};
+    delay = ${properties.delay?c};
+    lvl = ${properties.lvl};
+    isHomeWork = true;
+    terms = ${properties.terms};
+    gameStatus = STARTED;
+    gameSaving = true;
+    setGameMode(0);
+    cookie.setCookie("fastReload", "2", 0, "/games/menar");
+    $(".game-start-window").hide();
+    startGame();
+</script>
+</#if>
+<script>
+    setGameMode(0);
+</script>
+</body>
+</html>
