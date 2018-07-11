@@ -13,12 +13,13 @@ class Game {
       // paused - игра на паузе
       // waitng - ожидание ответа
       // finished - игра завершена
-      init: 'idle',
+      init: 'settings',
       transitions: [
-        { name: 'getReady', from: 'idle',      to: 'ready'    },
+        { name: 'getReady', from: 'settings',  to: 'ready'    },
         { name: 'start',    from: 'ready',     to: 'starting' },
         { name: 'play',     from: 'starting',  to: 'playing'  },
         { name: 'pause',    from: 'playing',   to: 'paused'   },
+        { name: 'resume',   from: 'paused',    to: 'playing'  },
         { name: 'wait',     from: 'playing',   to: 'waiting'  },
         { name: 'finish',   from: 'waiting',   to: 'finished' }
       ]

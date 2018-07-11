@@ -106,8 +106,7 @@
     <script type="text/javascript" src="/js/games/game.generator.js"></script>
     <script type="text/javascript" src="/js/utils.js"></script>
     <script type="text/javascript" src="/js/games/sounds.js"></script>
-    <script type="text/javascript" src="/js/games/flash-cards.js"></script>
-    <script type="text/javascript" src="/js/games/flash-card-game.class.js"></script>
+    <script type="text/javascript" src="/js/games/flash-cards.gameModule.js"></script>
     <script type="text/javascript" src="/js/cookie.js"></script>
     <link rel="stylesheet" href="/css/games/volume-controls.css">
     <link rel="stylesheet" href="/css/games/game.css">
@@ -149,17 +148,17 @@
         </div>
         <div class="game-pause-buttons">
             <div class="game-pause-buttons-resume" data-tooltip title="Продолжить" data-placement="bottom">
-                <img src="/images/games/resume.svg" onclick="resumeGame();">
+                <img src="/images/games/resume.svg" onclick="gameModule.resumeGame();">
             </div>
             <div class="game-pause-buttons-restart" data-tooltip title="Заново" data-placement="bottom">
-                <img src="/images/games/restart.svg" onclick="restartGame();">
+                <img src="/images/games/restart.svg" onclick="gameModule.restartGame();">
             </div>
-            <#--<div class="game-pause-buttons-menu" onclick="goToSettings();">-->
+            <#--<div class="game-pause-buttons-menu" onclick="gameModule.goToSettings();">-->
                 <#--Меню-->
             <#--</div>-->
         </div>
         <div class="game-big-pause-buttons container">
-            <div class="game-pause-buttons-menu" onclick="showSettings();">
+            <div class="game-pause-buttons-menu" onclick="gameModule.showSettings();">
                 <@spring.message 'games.flashCards.page.menu'/>
             </div>
         </div>
@@ -172,8 +171,8 @@
                     <label for="game-mode" class="col-sm-3 control-label"><@spring.message 'games.flashCards.page.mode'/></label>
                     <div class="col-sm-9">
                         <div id="game-mode" class="game-settings-field picker-field">
-                            <div class="game-settings-elem" id="gameMode0" onclick="setGameMode(0);"><@spring.message 'games.flashCards.modes.normal'/></div>
-                            <div class="game-settings-elem" id="gameMode1" onclick="setGameMode(1);"><@spring.message 'games.flashCards.modes.large'/></div>
+                            <div class="game-settings-elem" id="gameMode0" onclick="gameModule.setGameMode(0);"><@spring.message 'games.flashCards.modes.normal'/></div>
+                            <div class="game-settings-elem" id="gameMode1" onclick="gameModule.setGameMode(1);"><@spring.message 'games.flashCards.modes.large'/></div>
                         </div>
                         <div id="game-mode" class="game-settings-field-inactive picker-field">
                             <div class="game-settings-elem" id=""><@spring.message 'games.flashCards.modes.normal'/></div>
@@ -185,14 +184,14 @@
                     <label for="game-mode" class="col-sm-3 control-label"><@spring.message 'games.flashCards.page.abacuses'/></label>
                     <div class="col-sm-9">
                         <div id="game-mode" class="game-settings-field picker-field">
-                            <div class="game-settings-elem" onclick="setColumnsCount(1)" id="gameColumns1">1</div>
-                            <div class="game-settings-elem" onclick="setColumnsCount(2)" id="gameColumns2">2</div>
-                            <div class="game-settings-elem" onclick="setColumnsCount(3)" id="gameColumns3">3</div>
-                            <div class="game-settings-elem" onclick="setColumnsCount(4)" id="gameColumns4">4</div>
-                            <div class="game-settings-elem" onclick="setColumnsCount(5)" id="gameColumns5">5</div>
-                            <div class="game-settings-elem" onclick="setColumnsCount(6)" id="gameColumns6">6</div>
-                            <div class="game-settings-elem" onclick="setColumnsCount(7)" id="gameColumns7">7</div>
-                            <div class="game-settings-elem" onclick="setColumnsCount(8)" id="gameColumns8">8</div>
+                            <div class="game-settings-elem" onclick="gameModule.setColumnsCount(1)" id="gameColumns1">1</div>
+                            <div class="game-settings-elem" onclick="gameModule.setColumnsCount(2)" id="gameColumns2">2</div>
+                            <div class="game-settings-elem" onclick="gameModule.setColumnsCount(3)" id="gameColumns3">3</div>
+                            <div class="game-settings-elem" onclick="gameModule.setColumnsCount(4)" id="gameColumns4">4</div>
+                            <div class="game-settings-elem" onclick="gameModule.setColumnsCount(5)" id="gameColumns5">5</div>
+                            <div class="game-settings-elem" onclick="gameModule.setColumnsCount(6)" id="gameColumns6">6</div>
+                            <div class="game-settings-elem" onclick="gameModule.setColumnsCount(7)" id="gameColumns7">7</div>
+                            <div class="game-settings-elem" onclick="gameModule.setColumnsCount(8)" id="gameColumns8">8</div>
                         </div>
                         <div id="game-mode" class="game-settings-field-inactive picker-field">
                             <div class="game-settings-elem" id="gameColumnsInactive1">1</div>
@@ -213,15 +212,15 @@
                     <label for="game-mode" class="col-sm-3 control-label"><@spring.message 'games.flashCards.difficulty'/></label>
                     <div class="col-sm-9">
                         <div id="game-mode" class="game-settings-field picker-field">
-                            <div class="game-settings-elem" id="gameSettingsLvl0" onclick="changeGameLevel(0)">¼</div>
-                            <div class="game-settings-elem" id="gameSettingsLvl1" onclick="changeGameLevel(1)">⅑</div>
-                            <div class="game-settings-elem" id="gameSettingsLvl2" onclick="changeGameLevel(2)">2</div>
-                            <div class="game-settings-elem" id="gameSettingsLvl3" onclick="changeGameLevel(3)">3</div>
-                            <div class="game-settings-elem" id="gameSettingsLvl4" onclick="changeGameLevel(4)">4</div>
-                            <div class="game-settings-elem" id="gameSettingsLvl5" onclick="changeGameLevel(5)">5</div>
-                            <div class="game-settings-elem" id="gameSettingsLvl6" onclick="changeGameLevel(6)">6</div>
-                            <div class="game-settings-elem" id="gameSettingsLvl7" onclick="changeGameLevel(7)">7</div>
-                            <div class="game-settings-elem" id="gameSettingsLvl8" onclick="changeGameLevel(8)">8</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl0" onclick="gameModule.changeGameLevel(0)">¼</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl1" onclick="gameModule.changeGameLevel(1)">⅑</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl2" onclick="gameModule.changeGameLevel(2)">2</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl3" onclick="gameModule.changeGameLevel(3)">3</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl4" onclick="gameModule.changeGameLevel(4)">4</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl5" onclick="gameModule.changeGameLevel(5)">5</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl6" onclick="gameModule.changeGameLevel(6)">6</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl7" onclick="gameModule.changeGameLevel(7)">7</div>
+                            <div class="game-settings-elem" id="gameSettingsLvl8" onclick="gameModule.changeGameLevel(8)">8</div>
                         </div>
                         <div id="game-mode" class="game-settings-field-inactive picker-field">
                             <div class="game-settings-elem">¼</div>
@@ -241,12 +240,12 @@
                     <div class="col-sm-9">
                         <div class="game-settings-field row-nopad">
                             <div class="row">
-                                <div class="game-settings-elem col-xs-2 no-select" onclick="changeGameDelay(-100);"><
+                                <div class="game-settings-elem col-xs-2 no-select" onclick="gameModule.changeGameDelay(-100);"><
                                 </div>
                                 <div class="game-settings-elem col-xs-8" id="gameDelay"
-                                     onclick="changeGameDelayWindow()">1 <@spring.message 'games.common.sec'/>
+                                     onclick="gameModule.changeGameDelayWindow()">1 <@spring.message 'games.common.sec'/>
                                 </div>
-                                <div class="game-settings-elem col-xs-2 no-select" onclick="changeGameDelay(100);">>
+                                <div class="game-settings-elem col-xs-2 no-select" onclick="gameModule.changeGameDelay(100);">>
                                 </div>
                             </div>
                         </div>
@@ -262,12 +261,12 @@
                     <div class="col-sm-9">
                         <div class="game-settings-field row-nopad">
                             <div class="row">
-                                <div class="game-settings-elem col-xs-2 no-select" onclick="changeGameTerms(-1);"><
+                                <div class="game-settings-elem col-xs-2 no-select" onclick="gameModule.changeImpulsesCount(-1);"><
                                 </div>
                                 <div class="game-settings-elem col-xs-8" id="gameTerms"
-                                     onclick="changeGameTermsWindow()">1
+                                     onclick="gameModule.changeImpulsesCountWindow()">1
                                 </div>
-                                <div class="game-settings-elem col-xs-2 no-select" onclick="changeGameTerms(1);">></div>
+                                <div class="game-settings-elem col-xs-2 no-select" onclick="gameModule.changeImpulsesCount(1);">></div>
                             </div>
                         </div>
                         <div class="game-settings-field-inactive row-nopad">
@@ -279,7 +278,7 @@
                 </div>
             </div>
             <div class="game-settings-footer">
-                <div class="button" onclick="startGame();"><@spring.message 'games.flashCards.actions.play'/></div>
+                <div class="button" onclick="gameModule.startGame();"><@spring.message 'games.flashCards.actions.play'/></div>
             </div>
         </div>
         <div class="game-final-window">
@@ -299,15 +298,15 @@
                 <div class="game-final-block">
                     <img src="/images/game4.png" alt="">
                     <div class="game-final-block-buttons">
-                        <div class="btn btn-success" onclick="restartGame();"><@spring.message 'games.flashCards.actions.restartGame'/></div>
-                        <div class="btn btn-primary" id="game-save" onclick="saveAnswer();"><@spring.message 'games.flashCards.actions.saveAnswer'/></div>
+                        <div class="btn btn-success" onclick="gameModule.restartGame();"><@spring.message 'games.flashCards.actions.restartGame'/></div>
+                        <div class="btn btn-primary" id="game-save" onclick="gameModule.saveAnswer();"><@spring.message 'games.flashCards.actions.saveAnswer'/></div>
 
                         <div class="game-show-full-sequence">
-                            <div class="btn btn-info game-goto-next-example" onclick="startGame();"><@spring.message 'games.flashCards.actions.nextSequence'/>
+                            <div class="btn btn-info game-goto-next-example" onclick="gameModule.startGame();"><@spring.message 'games.flashCards.actions.nextSequence'/>
                             </div>
                         </div>
                         <div class="game-hide-full-sequence">
-                            <div class="btn btn-info" onclick="hideFullSequence();"><@spring.message 'games.flashCards.actions.hideSequence'/></div>
+                            <div class="btn btn-info" onclick="gameModule.hideFullSequence();"><@spring.message 'games.flashCards.actions.hideSequence'/></div>
                         </div>
                     </div>
                 </div>
@@ -324,7 +323,7 @@
         </div>
         <div id="multiGamePause">
             <div class="game-pause-button">
-                <img src="/images/games/settings.png" onclick="settingsGame();" data-tooltip title="Настройки">
+                <img src="/images/games/settings.png" onclick="gameModule.settingsGame();" data-tooltip title="Настройки">
             </div>
         </div>
         <div id="multiGame"></div>
@@ -342,7 +341,7 @@
         </div>
         <div class="game-answer-area-bg" id="singleGame">
             <div class="game-pause-button">
-                <img src="/images/games/settings.png" onclick="settingsGame();" data-tooltip title="Настройки">
+                <img src="/images/games/settings.png" onclick="gameModule.settingsGame();" data-tooltip title="Настройки">
             </div>
             <div class="progress">
                 <div class="progress-bar progress-bar-success progress-bar-striped active" id="gameProgress"
@@ -363,14 +362,14 @@
                 </div>
                 <div class="game-answer-field">
                     <input type="text" id="game-answer" autofocus>
-                    <div class="btn btn-success" onclick="checkAnswer();"><@spring.message 'games.flashCards.actions.answer'/></div>
+                    <div class="btn btn-success" onclick="gameModule.checkAnswer();"><@spring.message 'games.flashCards.actions.answer'/></div>
                 </div>
             </div>
             <div class="game-show-full-sequence">
-                <div class="btn btn-info game-goto-next-example" onclick="showAbacusField();"><@spring.message 'games.flashCards.actions.nextSequence'/></div>
+                <div class="btn btn-info game-goto-next-example" onclick="gameModule.showAbacusField();"><@spring.message 'games.flashCards.actions.nextSequence'/></div>
             </div>
             <div class="game-hide-full-sequence">
-                <div class="btn btn-info" onclick="hideFullSequence();"><@spring.message 'games.flashCards.actions.hideSequence'/></div>
+                <div class="btn btn-info" onclick="gameModule.hideFullSequence();"><@spring.message 'games.flashCards.actions.hideSequence'/></div>
             </div>
         </div>
     </div>
@@ -382,20 +381,15 @@
 
 <script>
     var homeWorkId = ${model.homework.id?c};
-    delay = ${properties.delay?c};
-    lvl = ${properties.lvl};
+    gameModule.cfg.delay = ${properties.delay?c};
+    gameModule.cfg.difficulty = ${properties.lvl};
     isHomeWork = true;
-    terms = ${properties.terms};
-    gameStatus = STARTED;
+    gameModule.cfg.impulsesCount = ${properties.terms};
     gameSaving = true;
-    setGameMode(0);
     cookie.setCookie("fastReload", "2", 0, "/games/menar");
     $(".game-start-window").hide();
-    startGame();
+    gameModule.startGame();
 </script>
 </#if>
-<script>
-    setGameMode(0);
-</script>
 </body>
 </html>

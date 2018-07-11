@@ -10,7 +10,9 @@ console.assert(game.fsm.state == 'ready');
 
 // вызывам, когда настройки заданы
 cfg = {
-  impulsesCount: 3
+  impulsesCount: 3,
+  difficulty: 1,
+  abakusCount: 3
 }
 var flashCardGame = new FlashCardGame(cfg);
 console.assert(flashCardGame.impulses.length == cfg.impulsesCount);
@@ -32,10 +34,11 @@ flashCardGame.show();
 flashCardGame.show();
 flashCardGame.show();
 console.assert(flashCardGame.fsm.state == 'waiting', flashCardGame.fsm.state);
-var answers = flashCardGame.impulses.slice();
-answers[0] = answers[0] - 1;
-flashCardGame.submit(answers);
-console.assert(flashCardGame.fsm.state == 'finished', flashCardGame.fsm.state);
-console.assert(flashCardGame.answers.length == flashCardGame.impulses.length);
-console.assert(flashCardGame.answers[0].isCorrect == false);
-console.assert(flashCardGame.answers[1].isCorrect == true);
+var answers = [[1,2,3],[4,5,6],[7,8,9]]
+answers = flashCardGame.submit(answers);
+//console.assert(flashCardGame.fsm.state == 'finished', flashCardGame.fsm.state);
+//console.assert(flashCardGame.answers.length == flashCardGame.impulses.length);
+//console.assert(flashCardGame.answers[0].isCorrect == false);
+//console.assert(flashCardGame.answers[1].isCorrect == true);
+console.log(answers)
+console.log(flashCardGame.impulses);

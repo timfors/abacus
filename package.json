@@ -1,0 +1,22 @@
+{
+  "name": "flash-cards",
+  "version": "1.0.0",
+  "description": "",
+  "main": "flash-cards.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/tuykin/flash-cards.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/tuykin/flash-cards/issues"
+  },
+  "homepage": "https://gitlab.com/tuykin/flash-cards#README",
+  "dependencies": {
+    "javascript-state-machine": "^3.0.1"
+  }
+}

@@ -1,18 +1,20 @@
 var Game = require('./game');
 
-class FlashCardGame extends Game {
+export default class FlashCardGame extends Game {
   constructor(cfg) {
     super(cfg);
 
     this.impulses = [];
-    for (var i = 0; i < cfg.impulsesCount; i++) {
-      this.impulses.push(this.generateImpulse())
-    }
     this.currentIndex = 0;
-
+    generateAllImpulses();
     this.answers = [];
   }
-
+  generateAllImpulses() {
+    this.impulses = [];
+    for (var i = 0; i < this.cfg.impulsesCount; i++) {
+      this.impulses.push(this.generateImpulse());
+    }
+  }
   show() {
     if (this.currentIndex < this.impulses.length) {
       return this.impulses[this.currentIndex++];
@@ -22,21 +24,30 @@ class FlashCardGame extends Game {
   }
 
   submit(answers) {
-    answers.forEach(function(item, index, array) {
-      this.answers.push(
-          {
-            submitted: item,
-            proper: this.impulses[index],
-            isCorrect: item == this.impulses[index]
-          }
-        )
+    this.answers = [];
+    answers.forEach(function(abakusAnswers, indexOfAbakus, array1) {
+      this.answers[indexOfAbakus] = [];
+      abakusAnswers.forEach(function(answer, indexOfImpulse, array2) {
+          this.answers[indexOfAbakus][indexOfImpulse] = {
+              submitted: answer,
+              proper: this.impulses[indexOfImpulse][indexOfAbakus],
+              isCorrect: answer == this.impulses[indexOfImpulse][indexOfAbakus]
+            };
+      }, this);
     }, this);
     this.fsm.finish();
+    return this.answers;
   }
 
   generateImpulse() {
+    const res = [];
+    let min = this.cfg.difficulty < 2 ? 0 : Math.pow(10, this.cfg.difficulty - 1)
+    let max = this.cfg.difficulty === 0 ? 5 : Math.pow(10, this.cfg.difficulty) 
     // TODO: cfg.difficulty should be counted
-    return getRandomInt(0, 100);
+    for (let i = 0; i < this.cfg.abakusCount; i++){
+      res.push(getRandomInt(min, max));
+    }
+    return res;
   }
 }
 
